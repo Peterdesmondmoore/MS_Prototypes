@@ -6,7 +6,7 @@
   "description": "A mixed-mode collection of stakeholder-ready prototypes discovered by Mission Surface.",
   "status": "draft",
   "formFactor": "mobile",
-  "demoPath": "/demo",
+  "demoPath": "/",
   "entryRoute": "/#/prototypes/mobile-sample",
   "pages": [
     "/#/prototypes/mobile-sample"

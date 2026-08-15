@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "productKey": "replace-with-product-key",
+  "productKey": "mission-surface",
   "prototypeKey": "laptop-sample",
   "title": "Laptop Sample",
   "description": "A screenshot-delivered laptop sample that demonstrates private image review conventions.",
@@ -8,15 +8,50 @@
   "formFactor": "laptop",
   "deliveryMode": "screenshots",
   "fidelity": "simulated",
-  "limitations": ["Uses fixture data", "Interactions are represented as page images", "Changes are not persisted"],
-  "pages": ["Overview", "Outcome detail"],
+  "limitations": [
+    "Uses fixture data",
+    "Interactions are represented as page images",
+    "Changes are not persisted"
+  ],
+  "pages": [
+    "Overview",
+    "Outcome detail"
+  ],
   "screenshots": [
-    { "page": "Overview", "path": "/prototypes/laptop-sample/screenshots/overview.png", "altText": "Laptop sample portfolio overview" },
-    { "page": "Outcome detail", "path": "/prototypes/laptop-sample/screenshots/outcome-detail.png", "altText": "Laptop sample outcome detail" }
+    {
+      "page": "Overview",
+      "path": "/prototypes/laptop-sample/screenshots/overview.png",
+      "altText": "Laptop sample portfolio overview"
+    },
+    {
+      "page": "Outcome detail",
+      "path": "/prototypes/laptop-sample/screenshots/outcome-detail.png",
+      "altText": "Laptop sample outcome detail"
+    }
   ],
   "annotations": [
-    { "page": "Overview", "items": [{ "number": 1, "x": 75, "y": 18, "content": "Evaluate the portfolio scanning lens." }] },
-    { "page": "Outcome detail", "items": [{ "number": 1, "x": 70, "y": 45, "content": "Evaluate whether contribution is understandable." }] }
+    {
+      "page": "Overview",
+      "items": [
+        {
+          "number": 1,
+          "x": 75,
+          "y": 18,
+          "content": "Evaluate the portfolio scanning lens."
+        }
+      ]
+    },
+    {
+      "page": "Outcome detail",
+      "items": [
+        {
+          "number": 1,
+          "x": 70,
+          "y": 45,
+          "content": "Evaluate whether contribution is understandable."
+        }
+      ]
+    }
   ],
   "createdAt": "2026-08-15",
   "updatedAt": "2026-08-15",

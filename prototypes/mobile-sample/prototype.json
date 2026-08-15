@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "productKey": "replace-with-product-key",
+  "productKey": "mission-surface",
   "prototypeKey": "mobile-sample",
   "title": "Mobile Sample",
   "description": "A live mobile sample that demonstrates the Mission Surface bridge and review conventions.",
@@ -8,14 +8,44 @@
   "formFactor": "mobile",
   "deliveryMode": "live",
   "fidelity": "simulated",
-  "limitations": ["Uses fixture data", "Authentication is simulated", "Changes are not persisted"],
+  "limitations": [
+    "Uses fixture data",
+    "Authentication is simulated",
+    "Changes are not persisted"
+  ],
   "demoPath": "/demo",
   "entryRoute": "/#/prototypes/mobile-sample",
-  "pages": ["Today", "Task detail"],
-  "integration": { "protocol": "mission-surface-prototype", "version": 1 },
+  "pages": [
+    "Today",
+    "Task detail"
+  ],
+  "integration": {
+    "protocol": "mission-surface-prototype",
+    "version": 1
+  },
   "annotations": [
-    { "page": "Today", "items": [{ "number": 1, "x": 50, "y": 45, "content": "Evaluate whether the primary decision is clear." }] },
-    { "page": "Task detail", "items": [{ "number": 1, "x": 50, "y": 50, "content": "Evaluate whether the evidence supports the intended action." }] }
+    {
+      "page": "Today",
+      "items": [
+        {
+          "number": 1,
+          "x": 50,
+          "y": 45,
+          "content": "Evaluate whether the primary decision is clear."
+        }
+      ]
+    },
+    {
+      "page": "Task detail",
+      "items": [
+        {
+          "number": 1,
+          "x": 50,
+          "y": 50,
+          "content": "Evaluate whether the evidence supports the intended action."
+        }
+      ]
+    }
   ],
   "createdAt": "2026-08-15",
   "updatedAt": "2026-08-15",

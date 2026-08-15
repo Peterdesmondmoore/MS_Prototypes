@@ -32,10 +32,15 @@ jobs:
         working-directory: demo
       - run: npm run build
         working-directory: demo
+      - name: Stage live demo at its declared path
+        run: |
+          mkdir -p pages/demo
+          cp -R demo/dist/. pages/demo/
+          cp demo/dist/mission-surface-deployment.json pages/
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: demo/dist
+          path: pages
 
   deploy:
     environment:

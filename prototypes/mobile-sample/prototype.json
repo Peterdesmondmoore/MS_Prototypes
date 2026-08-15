@@ -13,7 +13,7 @@
     "Authentication is simulated",
     "Changes are not persisted"
   ],
-  "demoPath": "/",
+  "demoPath": "/demo",
   "entryRoute": "/#/prototypes/mobile-sample",
   "pages": [
     "Today",

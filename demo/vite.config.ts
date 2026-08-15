@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react'
 const contentSecurityPolicy = "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; form-action 'none'; object-src 'none'; base-uri 'none'; frame-ancestors https://missionsurface.com http://localhost:* http://127.0.0.1:*"
 
 export default defineConfig({
-  base: process.env.GITHUB_ACTIONS ? '/MS_Prototypes/' : './',
+  base: process.env.GITHUB_ACTIONS ? '/MS_Prototypes/demo/' : './',
   plugins: [react(), {
     name: 'mission-surface-deployment-descriptor',
     generateBundle() {

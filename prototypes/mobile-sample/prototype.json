@@ -3,7 +3,7 @@
   "productKey": "mission-surface",
   "prototypeKey": "mobile-sample",
   "title": "Mobile Sample",
-  "description": "A live mobile sample that demonstrates the Mission Surface bridge and review conventions.",
+  "description": "An interactive mobile walkthrough for shaping, preparing and publishing an experience-validation prototype.",
   "status": "draft",
   "formFactor": "mobile",
   "deliveryMode": "live",
@@ -17,7 +17,9 @@
   "entryRoute": "/#/prototypes/mobile-sample",
   "pages": [
     "Today",
-    "Task detail"
+    "Task detail",
+    "Capture",
+    "Review"
   ],
   "integration": {
     "protocol": "mission-surface-prototype",
@@ -42,7 +44,29 @@
           "number": 1,
           "x": 50,
           "y": 50,
-          "content": "Evaluate whether the evidence supports the intended action."
+          "content": "Evaluate whether delivery-mode guidance and simulation boundaries are easy to understand."
+        }
+      ]
+    },
+    {
+      "page": "Capture",
+      "items": [
+        {
+          "number": 1,
+          "x": 50,
+          "y": 48,
+          "content": "Evaluate whether the local capture and validation responsibility is unmistakable."
+        }
+      ]
+    },
+    {
+      "page": "Review",
+      "items": [
+        {
+          "number": 1,
+          "x": 50,
+          "y": 52,
+          "content": "Evaluate whether the path from validated revision to Mission Surface review feels trustworthy."
         }
       ]
     }

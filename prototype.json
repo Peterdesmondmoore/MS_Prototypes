@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "productKey": "replace-with-product-key",
+  "prototypeKey": "prototype-library",
+  "title": "Mission Surface Prototype Library",
+  "description": "A mixed-mode collection of stakeholder-ready prototypes discovered by Mission Surface.",
+  "status": "draft",
+  "formFactor": "mobile",
+  "demoPath": "/demo",
+  "entryRoute": "/#/prototypes/mobile-sample",
+  "pages": ["/#/prototypes/mobile-sample"],
+  "createdAt": "2026-08-15",
+  "updatedAt": "2026-08-15",
+  "repository": {
+    "repositoryKey": "replace-with-repository-key",
+    "repositoryName": "replace-with-repository-name",
+    "sourceOfTruth": "github",
+    "accessMode": "read-only",
+    "manifestPattern": "/prototypes/*/prototype.json"
+  },
+  "prototypes": [
+    { "prototypeKey": "mobile-sample", "deliveryMode": "live", "formFactor": "mobile", "manifestPath": "/prototypes/mobile-sample/prototype.json" },
+    { "prototypeKey": "laptop-sample", "deliveryMode": "screenshots", "formFactor": "laptop", "manifestPath": "/prototypes/laptop-sample/prototype.json" }
+  ]
+}

@@ -14,8 +14,8 @@
   "createdAt": "2026-08-15",
   "updatedAt": "2026-08-15",
   "repository": {
-    "repositoryKey": "replace-with-repository-key",
-    "repositoryName": "replace-with-repository-name",
+    "repositoryKey": "ms-prototypes",
+    "repositoryName": "MS_Prototypes",
     "sourceOfTruth": "github",
     "accessMode": "read-only",
     "manifestPattern": "/prototypes/*/prototype.json"

@@ -24,7 +24,7 @@
       "type": "object",
       "additionalProperties": false,
       "required": ["protocol", "version"],
-      "properties": { "protocol": { "const": "mission-surface-prototype" }, "version": { "const": 1 } }
+      "properties": { "protocol": { "const": "mission-surface-prototype" }, "version": { "const": 2 } }
     },
     "screenshots": { "type": "array", "maxItems": 50, "items": { "$ref": "#/$defs/screenshot" } },
     "annotations": { "type": "array", "maxItems": 50, "items": { "$ref": "#/$defs/pageAnnotations" } },

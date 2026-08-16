@@ -52,7 +52,7 @@ for (const reference of catalogue.prototypes) {
     if (new Set(numbers).size !== numbers.length) fail(`Child manifest ${reference.prototypeKey} has duplicate annotation numbers on page ${annotation.page}.`)
   }
   if (child.deliveryMode === 'live') {
-    if (!child.demoPath || !child.entryRoute || child.integration?.protocol !== 'mission-surface-prototype' || child.integration?.version !== 1) fail(`Live prototype ${reference.prototypeKey} has invalid bridge metadata.`)
+    if (!child.demoPath || !child.entryRoute || child.integration?.protocol !== 'mission-surface-prototype' || child.integration?.version !== 2) fail(`Live prototype ${reference.prototypeKey} has invalid bridge metadata.`)
     if (child.screenshots) fail(`Live prototype ${reference.prototypeKey} must not declare screenshots.`)
   } else {
     if (child.demoPath || child.entryRoute || child.integration) fail(`Screenshot prototype ${reference.prototypeKey} must not declare live metadata.`)

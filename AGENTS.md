@@ -31,7 +31,7 @@ These instructions apply to every prototype, capture source and public demo in t
 ## Live / Public prototypes
 
 - Use React, TypeScript and Vite unless an existing live prototype has another static-web stack.
-- Keep `demoPath`, `entryRoute`, `pages` and `integration: { protocol: "mission-surface-prototype", version: 1 }` accurate.
+- Keep `demoPath`, `entryRoute`, `pages` and `integration: { protocol: "mission-surface-prototype", version: 2 }` accurate.
 - Use local fixture data only. Treat every Pages asset and route as publicly reachable.
 - Use hash routing, a restrictive CSP and the parent-provided bridge channel. Ready and page events post only the protocol, version, channel, prototype key, event type and an exact declared page. A viewport event may additionally post numeric `scrollX`, `scrollY`, `viewportWidth`, `viewportHeight`, `documentWidth` and `documentHeight`; never post DOM content, selectors, user data, tenant data or production data.
 - The public Pages output may contain live-mode application code only. Do not import screenshot-mode capture source or screenshot artifacts into `demo/`.

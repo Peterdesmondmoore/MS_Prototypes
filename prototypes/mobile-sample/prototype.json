@@ -27,7 +27,7 @@
   ],
   "integration": {
     "protocol": "mission-surface-prototype",
-    "version": 1
+    "version": 2
   },
   "annotations": [
     {

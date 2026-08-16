@@ -11,6 +11,8 @@ type Screen =
 
 type DeliveryMode = 'Live' | 'Images'
 
+const bridgeVersion = 2
+
 const pageOrder: Screen[] = [
   'Start',
   'Download starter',
@@ -43,7 +45,7 @@ export default function App() {
 
   const bridge = useMemo(() => {
     const query = new URLSearchParams(window.location.search)
-    if (query.get('msProtocol') !== 'mission-surface-prototype' || query.get('msVersion') !== '1' || query.get('msPrototype') !== 'mobile-sample' || !query.get('msChannel') || !query.get('msParentOrigin')) return null
+    if (query.get('msProtocol') !== 'mission-surface-prototype' || query.get('msVersion') !== String(bridgeVersion) || query.get('msPrototype') !== 'mobile-sample' || !query.get('msChannel') || !query.get('msParentOrigin')) return null
     const parentOrigin = new URL(query.get('msParentOrigin') as string).origin
     if (parentOrigin !== 'https://missionsurface.com' && !/^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(parentOrigin)) return null
     return { channel: query.get('msChannel'), parentOrigin }
@@ -51,7 +53,7 @@ export default function App() {
 
   useEffect(() => {
     if (!bridge) return
-    const postReady = () => window.parent.postMessage({ protocol: 'mission-surface-prototype', version: 1, channel: bridge.channel, prototypeKey: 'mobile-sample', type: 'ready', page: screen }, bridge.parentOrigin)
+    const postReady = () => window.parent.postMessage({ protocol: 'mission-surface-prototype', version: bridgeVersion, channel: bridge.channel, prototypeKey: 'mobile-sample', type: 'ready', page: screen }, bridge.parentOrigin)
     postReady()
     const retryTimers = [250, 1000].map((delay) => window.setTimeout(postReady, delay))
     return () => retryTimers.forEach(window.clearTimeout)
@@ -59,7 +61,7 @@ export default function App() {
 
   useEffect(() => {
     if (!bridge) return
-    window.parent.postMessage({ protocol: 'mission-surface-prototype', version: 1, channel: bridge.channel, prototypeKey: 'mobile-sample', type: 'page', page: screen }, bridge.parentOrigin)
+    window.parent.postMessage({ protocol: 'mission-surface-prototype', version: bridgeVersion, channel: bridge.channel, prototypeKey: 'mobile-sample', type: 'page', page: screen }, bridge.parentOrigin)
   }, [bridge, screen])
 
   useEffect(() => {
@@ -72,7 +74,7 @@ export default function App() {
       animationFrame = null
       window.parent.postMessage({
         protocol: 'mission-surface-prototype',
-        version: 1,
+        version: bridgeVersion,
         channel: bridge.channel,
         prototypeKey: 'mobile-sample',
         type: 'viewport',
@@ -163,7 +165,7 @@ export default function App() {
               <div className="asset-card">
                 <span className="asset-icon">ZIP</span>
                 <div><span>MISSION SURFACE</span><strong>Prototype starter</strong><small>React, TypeScript, Vite, schemas, and capture tools</small></div>
-                <span className="version-pill">v1</span>
+                <span className="version-pill">v2</span>
               </div>
               <div className="detail-list">
                 <Detail icon="01" title="Keep the structure" copy="Register every prototype in the root catalogue." />

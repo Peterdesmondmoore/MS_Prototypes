@@ -118,7 +118,6 @@ export default function App() {
       <div className="disclosure"><span className="disclosure-dot" /><strong>Mission Surface baseline sample</strong><span>Simulated &middot; No data is saved</span></div>
       <article className="phone-shell">
         <header className="app-header">
-          <button className="brand" onClick={() => setScreen('Start')} aria-label="Go to start"><span>MS</span></button>
           <div className="brand-copy"><strong>Prototype setup</strong><span>Guided baseline</span></div>
           <span className="sample-pill">SAMPLE</span>
           <button className="avatar" aria-label="Fixture profile">PD</button>
@@ -132,9 +131,9 @@ export default function App() {
           {screen === 'Start' && (
             <>
               <div className="hero">
-                <div className="eyebrow"><span className="live-dot" /> SIX STEPS TO REVIEW</div>
-                <h1>Set up a prototype for Mission Surface.</h1>
-                <p>Move from the governed starter to a verified review, then return the outcome to the Request dashboard.</p>
+                <div className="eyebrow"><span className="live-dot" /> SIX STEPS TO CONFIGURE</div>
+                <h1>Accelerate Development with Mission Surface Prototype.</h1>
+                <p>Our governed starter supports the development of thin prototypes, enabling rapid exploration, review and feedback before outcomes are returned to the Request dashboard.</p>
                 <button className="primary-button hero-button" onClick={() => setScreen('Download starter')}>Start the walkthrough <span>&rarr;</span></button>
                 <div className="hero-glow glow-one" /><div className="hero-glow glow-two" />
               </div>

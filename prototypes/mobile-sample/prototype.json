@@ -37,7 +37,8 @@
           "number": 1,
           "x": 52,
           "y": 35,
-          "content": "Evaluate whether the complete six-step setup path is understandable before the walkthrough begins."
+          "title": "Progress Measured",
+          "content": "Each step contributes to overall progress, with completion reaching 100% once all steps are finished."
         }
       ]
     },
@@ -48,7 +49,7 @@
           "number": 1,
           "x": 50,
           "y": 46,
-          "content": "Evaluate whether the starter's purpose and governed repository structure are clear."
+          "content": "Step 1 : Prototype Starter\nThe user must download the zip file to progress to the next step in the workflow."
         }
       ]
     },
@@ -59,7 +60,7 @@
           "number": 1,
           "x": 50,
           "y": 49,
-          "content": "Evaluate whether Mission Surface's read-only GitHub access boundary is unmistakable."
+          "content": "Step 3: Repository Connection\nThe user must connect their new github prototypes repository with starter to enable prototypes."
         }
       ]
     },
@@ -70,7 +71,7 @@
           "number": 1,
           "x": 50,
           "y": 50,
-          "content": "Evaluate whether the choice between GitHub Pages and local image preparation is easy to make."
+          "content": "Step 3 : Two prototype options\nThe user can provide two types of prototypes 1) images created in the repository or 2) live via github pages."
         }
       ]
     },
@@ -81,7 +82,7 @@
           "number": 1,
           "x": 50,
           "y": 50,
-          "content": "Evaluate whether verification covers both technical integrity and the reviewer-visible experience."
+          "content": "Step 4 : Verify\nMission Surface will verify the setup before making prototypes available to review."
         }
       ]
     },

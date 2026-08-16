@@ -1,6 +1,8 @@
 # Mission Surface dual-mode prototype starter
 
-This starter contains one fixture-only live mobile example and one screenshot-delivered laptop example. Replace the sample content and all `replace-with-*` identities while preserving the root/child relationships.
+This starter contains one fixture-only live mobile example and one screenshot-delivered laptop example. Keep these baseline samples intact; add product prototypes with new identities while preserving the root/child relationships.
+
+The included `mobile-sample` and `laptop-sample` prototypes are protected **Mission Surface baseline samples**, identified by `isSample: true` in both the root catalogue and child manifests. Mission Surface must classify them as samples, not product prototypes. Do not modify or regenerate these baselines during unrelated prototype work; create a new prototype key and directory instead. A baseline may change only when that baseline change is explicitly requested.
 
 From a PowerShell terminal at the repository root, run:
 
@@ -14,4 +16,4 @@ The public Vite bundle must import only live-mode code. Capture source and scree
 
 Every child is a **Simulated experience** and must list its limitations. `approved` means the target UX is approved; it does not indicate production readiness, security approval, integration completeness or implementation approval.
 
-See `AGENTS.md`, `schemas/` and `docs/demo-notes.md` before changing the contract.
+See `AGENTS.md`, `schemas/`, `docs/demo-notes.md` and `docs/explain-annotations.md` before changing the contract. Explain annotation coordinates identify pointer anchors; Mission Surface renders their fixed callouts and interactive hotspots consistently across all prototypes.

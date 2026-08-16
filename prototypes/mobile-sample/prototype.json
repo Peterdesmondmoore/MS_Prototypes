@@ -2,24 +2,28 @@
   "schemaVersion": 1,
   "productKey": "mission-surface",
   "prototypeKey": "mobile-sample",
+  "isSample": true,
   "title": "Mobile Sample",
-  "description": "An interactive mobile walkthrough for shaping, preparing and publishing an experience-validation prototype.",
+  "description": "An interactive baseline walkthrough of the six high-level steps for taking a Mission Surface prototype from starter download to Request dashboard feedback.",
   "status": "draft",
   "formFactor": "mobile",
   "deliveryMode": "live",
   "fidelity": "simulated",
   "limitations": [
     "Uses fixture data",
-    "Authentication is simulated",
-    "Changes are not persisted"
+    "GitHub connection, publishing, comments, and feedback submission are simulated",
+    "No files are downloaded and no changes are persisted"
   ],
   "demoPath": "/demo",
   "entryRoute": "/#/prototypes/mobile-sample",
   "pages": [
-    "Today",
-    "Task detail",
-    "Capture",
-    "Review"
+    "Start",
+    "Download starter",
+    "Connect GitHub",
+    "Publish or capture",
+    "Verify",
+    "Review and comment",
+    "Submit feedback"
   ],
   "integration": {
     "protocol": "mission-surface-prototype",
@@ -27,51 +31,84 @@
   },
   "annotations": [
     {
-      "page": "Today",
+      "page": "Start",
       "items": [
         {
           "number": 1,
-          "x": 50,
-          "y": 45,
-          "content": "Evaluate whether the primary decision is clear."
+          "x": 52,
+          "y": 35,
+          "content": "Evaluate whether the complete six-step setup path is understandable before the walkthrough begins."
         }
       ]
     },
     {
-      "page": "Task detail",
+      "page": "Download starter",
+      "items": [
+        {
+          "number": 1,
+          "x": 50,
+          "y": 46,
+          "content": "Evaluate whether the starter's purpose and governed repository structure are clear."
+        }
+      ]
+    },
+    {
+      "page": "Connect GitHub",
+      "items": [
+        {
+          "number": 1,
+          "x": 50,
+          "y": 49,
+          "content": "Evaluate whether Mission Surface's read-only GitHub access boundary is unmistakable."
+        }
+      ]
+    },
+    {
+      "page": "Publish or capture",
       "items": [
         {
           "number": 1,
           "x": 50,
           "y": 50,
-          "content": "Evaluate whether delivery-mode guidance and simulation boundaries are easy to understand."
+          "content": "Evaluate whether the choice between GitHub Pages and local image preparation is easy to make."
         }
       ]
     },
     {
-      "page": "Capture",
+      "page": "Verify",
       "items": [
         {
           "number": 1,
           "x": 50,
-          "y": 48,
-          "content": "Evaluate whether the local capture and validation responsibility is unmistakable."
+          "y": 50,
+          "content": "Evaluate whether verification covers both technical integrity and the reviewer-visible experience."
         }
       ]
     },
     {
-      "page": "Review",
+      "page": "Review and comment",
       "items": [
         {
           "number": 1,
-          "x": 50,
-          "y": 52,
-          "content": "Evaluate whether the path from validated revision to Mission Surface review feels trustworthy."
+          "x": 58,
+          "y": 56,
+          "content": "Evaluate whether review tools and contextual commenting feel connected to the demonstrated journey."
+        }
+      ]
+    },
+    {
+      "page": "Submit feedback",
+      "items": [
+        {
+          "number": 1,
+          "x": 52,
+          "y": 58,
+          "content": "Evaluate whether the handoff from prototype review to the Request dashboard closes the feedback loop."
         }
       ]
     }
   ],
   "createdAt": "2026-08-15",
-  "updatedAt": "2026-08-15",
+  "updatedAt": "2026-08-16",
   "repositoryKey": "ms-prototypes"
 }

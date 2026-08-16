@@ -6,17 +6,25 @@ These instructions apply to every prototype, capture source and public demo in t
 
 - Build disposable, fixture-only experience-validation prototypes. Do not add authentication, production APIs, analytics, databases, credentials or enterprise data.
 - Mission Surface is the catalogue and review surface. It reads this repository through a read-only GitHub App and never clones, builds, deploys or writes to it.
+- Every child manifest and matching root catalogue entry declares `isSample`. Mission Surface treats `isSample: true` as a Mission Surface sample rather than a product prototype; product prototypes must declare `isSample: false`.
 - Every child manifest declares exactly one `deliveryMode`: `live` or `screenshots`. A repository may mix modes.
 - Every child declares `schemaVersion: 1`, `fidelity: simulated` and a non-empty `limitations` list. Display these limits wherever the prototype is reviewed.
 - `approved` means: “The demonstrated experience has been approved as the target UX. It does not indicate production readiness, security approval, integration completeness or implementation approval.” Never imply otherwise.
+
+## Protected baseline samples
+
+- `mobile-sample` and `laptop-sample` are the Mission Surface baseline samples. Refer to them as **baseline samples**, not as product prototypes.
+- Their manifests, routes, fixture content, capture source, screenshots and live demo behavior form the stable baseline for validating Mission Surface ingestion and review behavior.
+- Do not update, regenerate or re-capture either baseline sample as a consequence of unrelated repository work. Work on new product prototypes must use new prototype keys and separate child directories.
+- Change a baseline sample only when the user explicitly requests a baseline change. Keep `isSample: true` on both baseline samples and update all affected baseline assets deliberately in the same change.
 
 ## Shared metadata contract
 
 - Store the root catalogue at `prototype.json` and each child at `prototypes/<prototype-key>/prototype.json`.
 - Preserve stable `productKey`, `prototypeKey`, `repositoryKey` and manifest-path relationships.
-- Root entries mirror each child’s `deliveryMode` and `formFactor`.
+- Root entries mirror each child’s `isSample`, `deliveryMode` and `formFactor`.
 - Child pages are stable, case-sensitive review identifiers. Comments and live page events must use an exact `pages[]` value.
-- Define optional page-specific Explain annotations as numbered percentage coordinates and plain-text content. Keep notes evaluative, toggleable and non-blocking.
+- Define optional page-specific Explain annotations as numbered percentage anchor coordinates and plain-text content. Render each annotation as a fixed-position text callout with a pointer aimed at its anchor; do not use tooltip-only text or let the callout move with prototype scrolling. While Explain is selected, show all callouts for the current page. While Explain is off, keep each anchor as an invisible keyboard-focusable and pointer-selectable hotspot: shade it on hover or focus, and reveal its callout on hover, focus or activation. Callouts must remain evaluative, dismissible, non-blocking and usable without hover.
 - Validate with `npm run validate` from `demo/` before completion.
 
 ## Live / Public prototypes

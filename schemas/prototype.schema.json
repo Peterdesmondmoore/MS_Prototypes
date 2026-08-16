@@ -4,11 +4,12 @@
   "title": "Mission Surface child prototype",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schemaVersion", "productKey", "prototypeKey", "title", "description", "status", "formFactor", "deliveryMode", "fidelity", "limitations", "pages", "createdAt", "updatedAt", "repositoryKey"],
+  "required": ["schemaVersion", "productKey", "prototypeKey", "isSample", "title", "description", "status", "formFactor", "deliveryMode", "fidelity", "limitations", "pages", "createdAt", "updatedAt", "repositoryKey"],
   "properties": {
     "schemaVersion": { "const": 1 },
     "productKey": { "$ref": "#/$defs/key" },
     "prototypeKey": { "$ref": "#/$defs/key" },
+    "isSample": { "type": "boolean", "description": "True only for a protected Mission Surface baseline sample; false for product prototypes." },
     "title": { "type": "string", "minLength": 1, "maxLength": 255 },
     "description": { "type": "string", "minLength": 1, "maxLength": 2000 },
     "status": { "enum": ["draft", "testing", "approved"] },
@@ -64,10 +65,10 @@
       "additionalProperties": false,
       "required": ["number", "x", "y", "content"],
       "properties": {
-        "number": { "type": "integer", "minimum": 1, "maximum": 50 },
-        "x": { "type": "number", "minimum": 0, "maximum": 100 },
-        "y": { "type": "number", "minimum": 0, "maximum": 100 },
-        "content": { "type": "string", "minLength": 1, "maxLength": 1000 }
+        "number": { "type": "integer", "minimum": 1, "maximum": 50, "description": "Visible callout identifier, unique within its page." },
+        "x": { "type": "number", "minimum": 0, "maximum": 100, "description": "Horizontal percentage coordinate of the pointer anchor, not the callout box." },
+        "y": { "type": "number", "minimum": 0, "maximum": 100, "description": "Vertical percentage coordinate of the pointer anchor, not the callout box." },
+        "content": { "type": "string", "minLength": 1, "maxLength": 1000, "description": "Plain-text evaluative guidance rendered in the fixed callout." }
       }
     }
   }

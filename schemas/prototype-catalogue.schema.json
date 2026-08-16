@@ -37,9 +37,10 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["prototypeKey", "deliveryMode", "formFactor", "manifestPath"],
+        "required": ["prototypeKey", "isSample", "deliveryMode", "formFactor", "manifestPath"],
         "properties": {
           "prototypeKey": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$", "maxLength": 120 },
+          "isSample": { "type": "boolean", "description": "Mirrors the child manifest and identifies protected Mission Surface baseline samples." },
           "deliveryMode": { "enum": ["live", "screenshots"] },
           "formFactor": { "enum": ["mobile", "laptop"] },
           "manifestPath": { "type": "string", "pattern": "^/prototypes/[a-z0-9]+(?:-[a-z0-9]+)*/prototype\\.json$", "maxLength": 500 }

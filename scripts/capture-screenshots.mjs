@@ -14,7 +14,7 @@ try {
   const page = await browser.newPage({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 })
   await page.goto(pathToFileURL(resolve(root, 'capture/laptop-sample.html')).href)
   await page.screenshot({ path: resolve(output, 'overview.png'), animations: 'disabled' })
-  await page.locator('[data-open-detail]').click()
+  await page.locator('[data-capture-review]').click()
   await page.evaluate(() => window.scrollTo(0, 0))
   await page.screenshot({ path: resolve(output, 'outcome-detail.png'), animations: 'disabled' })
 } finally {

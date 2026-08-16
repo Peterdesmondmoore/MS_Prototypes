@@ -22,7 +22,7 @@ if (!Array.isArray(catalogue.prototypes) || !catalogue.prototypes.length) fail('
 const rootKeys = new Set()
 const rootPaths = new Set()
 for (const reference of catalogue.prototypes) {
-  exactKeys(reference, ['prototypeKey', 'deliveryMode', 'formFactor', 'manifestPath'], 'Root prototype entry')
+  exactKeys(reference, ['prototypeKey', 'isSample', 'deliveryMode', 'formFactor', 'manifestPath'], 'Root prototype entry')
   if (!keyPattern.test(reference.prototypeKey) || rootKeys.has(reference.prototypeKey)) fail('Prototype keys must be unique semantic slugs.')
   if (!modes.has(reference.deliveryMode) || !factors.has(reference.formFactor)) fail('Root delivery mode or form factor is invalid.')
   const expectedPath = `/prototypes/${reference.prototypeKey}/prototype.json`
@@ -36,6 +36,8 @@ for (const reference of catalogue.prototypes) {
     || child.productKey !== catalogue.productKey
     || child.repositoryKey !== catalogue.repository.repositoryKey
     || child.prototypeKey !== reference.prototypeKey
+    || typeof child.isSample !== 'boolean'
+    || child.isSample !== reference.isSample
     || child.deliveryMode !== reference.deliveryMode
     || child.formFactor !== reference.formFactor
     || child.fidelity !== 'simulated'
@@ -45,6 +47,10 @@ for (const reference of catalogue.prototypes) {
   if (!Array.isArray(child.limitations) || !child.limitations.length) fail(`Child manifest ${reference.prototypeKey} must disclose limitations.`)
   const annotationPages = (child.annotations ?? []).map((annotation) => annotation.page)
   if (new Set(annotationPages).size !== annotationPages.length || annotationPages.some((page) => !child.pages.includes(page))) fail(`Child manifest ${reference.prototypeKey} has invalid annotations.`)
+  for (const annotation of child.annotations ?? []) {
+    const numbers = annotation.items?.map((item) => item.number) ?? []
+    if (new Set(numbers).size !== numbers.length) fail(`Child manifest ${reference.prototypeKey} has duplicate annotation numbers on page ${annotation.page}.`)
+  }
   if (child.deliveryMode === 'live') {
     if (!child.demoPath || !child.entryRoute || child.integration?.protocol !== 'mission-surface-prototype' || child.integration?.version !== 1) fail(`Live prototype ${reference.prototypeKey} has invalid bridge metadata.`)
     if (child.screenshots) fail(`Live prototype ${reference.prototypeKey} must not declare screenshots.`)

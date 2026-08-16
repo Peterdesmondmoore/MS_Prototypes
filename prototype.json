@@ -12,7 +12,7 @@
     "/#/prototypes/mobile-sample"
   ],
   "createdAt": "2026-08-15",
-  "updatedAt": "2026-08-15",
+  "updatedAt": "2026-08-16",
   "repository": {
     "repositoryKey": "ms-prototypes",
     "repositoryName": "MS_Prototypes",
@@ -23,12 +23,14 @@
   "prototypes": [
     {
       "prototypeKey": "mobile-sample",
+      "isSample": true,
       "deliveryMode": "live",
       "formFactor": "mobile",
       "manifestPath": "/prototypes/mobile-sample/prototype.json"
     },
     {
       "prototypeKey": "laptop-sample",
+      "isSample": true,
       "deliveryMode": "screenshots",
       "formFactor": "laptop",
       "manifestPath": "/prototypes/laptop-sample/prototype.json"

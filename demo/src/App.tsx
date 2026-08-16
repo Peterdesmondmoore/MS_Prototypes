@@ -1,21 +1,44 @@
 import { useEffect, useMemo, useState } from 'react'
 
-type Screen = 'Today' | 'Task detail' | 'Capture' | 'Review'
-type DeliveryMode = 'Live' | 'Screenshots'
+type Screen =
+  | 'Start'
+  | 'Download starter'
+  | 'Connect GitHub'
+  | 'Publish or capture'
+  | 'Verify'
+  | 'Review and comment'
+  | 'Submit feedback'
 
-const journey: Array<{ page: Screen; number: string; title: string; summary: string }> = [
-  { page: 'Task detail', number: '01', title: 'Shape the experience', summary: 'Choose a focused journey and disclose what is simulated.' },
-  { page: 'Capture', number: '02', title: 'Prepare the repository', summary: 'Capture and validate every declared review page locally.' },
-  { page: 'Review', number: '03', title: 'Publish for review', summary: 'Push the verified revision, then review it in Mission Surface.' },
+type DeliveryMode = 'Live' | 'Images'
+
+const pageOrder: Screen[] = [
+  'Start',
+  'Download starter',
+  'Connect GitHub',
+  'Publish or capture',
+  'Verify',
+  'Review and comment',
+  'Submit feedback',
 ]
 
-const pageOrder: Screen[] = ['Today', 'Task detail', 'Capture', 'Review']
+const journey: Array<{ page: Exclude<Screen, 'Start'>; number: string; title: string; summary: string }> = [
+  { page: 'Download starter', number: '01', title: 'Download the starter', summary: 'Begin with the governed repository structure.' },
+  { page: 'Connect GitHub', number: '02', title: 'Connect GitHub', summary: 'Give Mission Surface read-only catalogue access.' },
+  { page: 'Publish or capture', number: '03', title: 'Publish or capture', summary: 'Enable Pages for live work, or prepare images locally.' },
+  { page: 'Verify', number: '04', title: 'Verify the revision', summary: 'Check manifests, routes, artifacts, and limitations.' },
+  { page: 'Review and comment', number: '05', title: 'Review and comment', summary: 'Walk the experience and leave contextual feedback.' },
+  { page: 'Submit feedback', number: '06', title: 'Submit the request', summary: 'Send the review outcome to the Request dashboard.' },
+]
 
 export default function App() {
-  const [screen, setScreen] = useState<Screen>('Today')
+  const [screen, setScreen] = useState<Screen>('Start')
+  const [downloaded, setDownloaded] = useState(false)
+  const [connected, setConnected] = useState(false)
   const [deliveryMode, setDeliveryMode] = useState<DeliveryMode>('Live')
-  const [completed, setCompleted] = useState<string[]>(['Define one audience'])
-  const [showSuccess, setShowSuccess] = useState(false)
+  const [published, setPublished] = useState(false)
+  const [verified, setVerified] = useState(false)
+  const [commented, setCommented] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
 
   const bridge = useMemo(() => {
     const query = new URLSearchParams(window.location.search)
@@ -38,134 +61,176 @@ export default function App() {
     window.parent.postMessage({ protocol: 'mission-surface-prototype', version: 1, channel: bridge.channel, prototypeKey: 'mobile-sample', type: 'page', page: screen }, bridge.parentOrigin)
   }, [bridge, screen])
 
-  const toggleComplete = (label: string) => {
-    setCompleted((current) => current.includes(label) ? current.filter((item) => item !== label) : [...current, label])
-  }
-
-  const progress = Math.min(100, Math.round((completed.length / 5) * 100))
+  const completion = [downloaded, connected, published, verified, commented, submitted]
+  const progress = Math.round((completion.filter(Boolean).length / completion.length) * 100)
   const goBack = () => setScreen(pageOrder[Math.max(0, pageOrder.indexOf(screen) - 1)])
+  const completedFor = (index: number) => completion[index]
 
   return (
     <main className="stage">
-      <div className="disclosure"><span className="disclosure-dot" /> <strong>Simulated experience</strong><span>Fixture content · No data is saved</span></div>
+      <div className="disclosure"><span className="disclosure-dot" /><strong>Mission Surface baseline sample</strong><span>Simulated &middot; No data is saved</span></div>
       <article className="phone-shell">
         <header className="app-header">
-          <button className="brand" onClick={() => setScreen('Today')} aria-label="Go to Today"><span>MS</span></button>
-          <div className="brand-copy"><strong>Prototype Studio</strong><span>Guided workspace</span></div>
+          <button className="brand" onClick={() => setScreen('Start')} aria-label="Go to start"><span>MS</span></button>
+          <div className="brand-copy"><strong>Prototype setup</strong><span>Guided baseline</span></div>
+          <span className="sample-pill">SAMPLE</span>
           <button className="avatar" aria-label="Fixture profile">PD</button>
         </header>
 
-        <div className="screen-progress" aria-label={`Journey ${progress}% complete`}><span style={{ width: `${progress}%` }} /></div>
+        <div className="screen-progress" aria-label={`Setup ${progress}% complete`}><span style={{ width: `${progress}%` }} /></div>
 
         <section className="screen" key={screen}>
-          {screen !== 'Today' && <button className="text-button back-button" onClick={goBack}><span>←</span> Back</button>}
+          {screen !== 'Start' && <button className="text-button back-button" onClick={goBack}><span>&larr;</span> Back</button>}
 
-          {screen === 'Today' && (
+          {screen === 'Start' && (
             <>
               <div className="hero">
-                <div className="eyebrow"><span className="live-dot" /> PROTOTYPING PLAYBOOK</div>
-                <h1>Take an idea from brief to review.</h1>
-                <p>Build a focused, fixture-only experience and make every review state easy to understand.</p>
-                <button className="primary-button hero-button" onClick={() => setScreen('Task detail')}>Continue your walkthrough <span>→</span></button>
-                <div className="hero-orbit orbit-one" /><div className="hero-orbit orbit-two" />
+                <div className="eyebrow"><span className="live-dot" /> SIX STEPS TO REVIEW</div>
+                <h1>Set up a prototype for Mission Surface.</h1>
+                <p>Move from the governed starter to a verified review, then return the outcome to the Request dashboard.</p>
+                <button className="primary-button hero-button" onClick={() => setScreen('Download starter')}>Start the walkthrough <span>&rarr;</span></button>
+                <div className="hero-glow glow-one" /><div className="hero-glow glow-two" />
               </div>
 
-              <div className="metrics" aria-label="Prototype summary">
-                <div><strong>3</strong><span>stages</span></div>
-                <div><strong>{progress}%</strong><span>ready</span></div>
-                <div><strong>1</strong><span>journey</span></div>
+              <div className="metrics" aria-label="Prototype setup summary">
+                <div><strong>6</strong><span>steps</span></div>
+                <div><strong>{progress}%</strong><span>complete</span></div>
+                <div><strong>~8</strong><span>minutes</span></div>
               </div>
 
-              <div className="section-heading"><div><span>YOUR PATH</span><h2>How the workflow fits together</h2></div><span className="time-chip">~8 min</span></div>
+              <div className="section-heading"><div><span>BASELINE PATH</span><h2>From starter to feedback</h2></div><span className="time-chip">HIGH LEVEL</span></div>
               <div className="journey-list">
                 {journey.map((item, index) => (
                   <button className="journey-card" key={item.page} onClick={() => setScreen(item.page)}>
-                    <span className={`step-number ${index === 0 ? 'current' : ''}`}>{item.number}</span>
+                    <span className={`step-number ${completedFor(index) ? 'complete' : index === completion.findIndex((item) => !item) ? 'current' : ''}`}>{completedFor(index) ? 'OK' : item.number}</span>
                     <span className="journey-copy"><strong>{item.title}</strong><small>{item.summary}</small></span>
-                    <span className="card-arrow">→</span>
+                    <span className="card-arrow">&rarr;</span>
                   </button>
                 ))}
               </div>
-              <aside className="tip-card"><span className="tip-icon">✦</span><div><strong>Keep it intentionally small</strong><p>Prototype the decision you need to learn about—not the entire product.</p></div></aside>
+              <aside className="tip-card"><span className="tip-icon">i</span><div><strong>One setup path, two delivery modes</strong><p>Live prototypes use GitHub Pages. Image prototypes are captured and validated locally.</p></div></aside>
             </>
           )}
 
-          {screen === 'Task detail' && (
+          {screen === 'Download starter' && (
             <>
-              <div className="step-kicker"><span>STEP 1 OF 3</span><span>Shape</span></div>
-              <h1>Start with the experience.</h1>
-              <p className="lead">Define one meaningful journey before you touch the interface. A clear boundary makes feedback useful.</p>
-
-              <div className="panel">
-                <div className="panel-heading"><span className="panel-icon purple">01</span><div><strong>Choose a delivery mode</strong><small>How should reviewers experience it?</small></div></div>
-                <div className="segmented-control">
-                  {(['Live', 'Screenshots'] as DeliveryMode[]).map((mode) => <button key={mode} className={deliveryMode === mode ? 'selected' : ''} onClick={() => setDeliveryMode(mode)}><span>{mode === 'Live' ? '◉' : '▣'}</span>{mode}</button>)}
-                </div>
-                <div className="mode-explainer"><strong>{deliveryMode === 'Live' ? 'Interactive journey' : 'Private image review'}</strong><p>{deliveryMode === 'Live' ? 'Use for working transitions and decisions. Only fixture data belongs in the public bundle.' : 'Use for private visual concepts. Map one static image to every declared page.'}</p></div>
+              <StepHeading number="1" label="START" title="Download the governed starter." description="Use the starter so Mission Surface can discover the catalogue, child manifests, review pages, and limitations consistently." />
+              <div className="asset-card">
+                <span className="asset-icon">ZIP</span>
+                <div><span>MISSION SURFACE</span><strong>Prototype starter</strong><small>React, TypeScript, Vite, schemas, and capture tools</small></div>
+                <span className="version-pill">v1</span>
               </div>
+              <div className="detail-list">
+                <Detail icon="01" title="Keep the structure" copy="Register every prototype in the root catalogue." />
+                <Detail icon="02" title="Use fixture content" copy="Never include customer, tenant, or production data." />
+                <Detail icon="03" title="Declare limitations" copy="Make the simulated boundary visible to reviewers." />
+              </div>
+              {downloaded ? <StatusCard title="Starter ready" copy="The sample download is complete. No file was created in this simulation." /> : <button className="primary-button full-button" onClick={() => setDownloaded(true)}>Download starter <span>&darr;</span></button>}
+              {downloaded && <button className="primary-button full-button" onClick={() => setScreen('Connect GitHub')}>Connect GitHub <span>&rarr;</span></button>}
+            </>
+          )}
 
-              <div className="panel compact-panel">
-                <div className="panel-heading"><span className="panel-icon mint">02</span><div><strong>Write the boundary</strong><small>Tap each item as you define it</small></div></div>
-                {['Define one audience', 'Name the primary action', 'List the simulation limits'].map((label) => (
-                  <button className="check-row" key={label} onClick={() => toggleComplete(label)}><span className={completed.includes(label) ? 'check checked' : 'check'}>{completed.includes(label) ? '✓' : ''}</span><span>{label}</span></button>
+          {screen === 'Connect GitHub' && (
+            <>
+              <StepHeading number="2" label="CONNECT" title="Connect the GitHub repository." description="Mission Surface reads the repository through a read-only GitHub App. It does not clone, build, deploy, or write to it." />
+              <div className="repository-card">
+                <span className="repo-mark">GH</span>
+                <div><span>FIXTURE REPOSITORY</span><strong>team / prototype-workspace</strong><small>main &middot; private &middot; catalogue detected</small></div>
+                <span className={`status-pill ${connected ? 'connected' : ''}`}>{connected ? 'Connected' : 'Ready'}</span>
+              </div>
+              <div className="permission-card">
+                <span className="permission-icon">RO</span><div><strong>Read-only access</strong><p>Repository metadata and committed prototype files only.</p></div>
+              </div>
+              {connected ? <StatusCard title="Repository connected" copy="Two baseline samples were discovered from prototype.json." /> : <button className="primary-button full-button" onClick={() => setConnected(true)}>Connect repository <span>&rarr;</span></button>}
+              {connected && <button className="primary-button full-button" onClick={() => setScreen('Publish or capture')}>Choose delivery <span>&rarr;</span></button>}
+            </>
+          )}
+
+          {screen === 'Publish or capture' && (
+            <>
+              <StepHeading number="3" label="DELIVER" title="Publish live or prepare images." description="Choose the path declared by the prototype manifest. Both paths end with committed, verifiable review assets." />
+              <div className="segmented-control" aria-label="Delivery mode">
+                {(['Live', 'Images'] as DeliveryMode[]).map((mode) => <button key={mode} className={deliveryMode === mode ? 'selected' : ''} onClick={() => { setDeliveryMode(mode); setPublished(false) }}><span>{mode === 'Live' ? 'WEB' : 'PNG'}</span>{mode}</button>)}
+              </div>
+              {deliveryMode === 'Live' ? (
+                <div className="mode-panel">
+                  <div className="mode-heading"><span className="panel-icon cyan">GH</span><div><strong>Enable GitHub Pages</strong><small>Settings &rarr; Pages &rarr; GitHub Actions</small></div></div>
+                  <ol><li>Push the validated live prototype.</li><li>Enable Pages for the repository.</li><li>Confirm the deployed revision metadata.</li></ol>
+                </div>
+              ) : (
+                <div className="terminal-card">
+                  <div className="terminal-top"><span><i /><i /><i /></span><small>PowerShell &middot; repository root</small></div>
+                  <code><span>PS</span> .\prepare-and-validate.ps1</code>
+                  <p>Captures declared pages, validates the images, and builds the live-only public bundle.</p>
+                </div>
+              )}
+              {published ? <StatusCard title={deliveryMode === 'Live' ? 'Pages enabled' : 'Images prepared'} copy={deliveryMode === 'Live' ? 'The fixture deployment is available for verification.' : 'The fixture screenshots passed local preparation.'} /> : <button className="primary-button full-button" onClick={() => setPublished(true)}>{deliveryMode === 'Live' ? 'Enable GitHub Pages' : 'Run prepare and validate'} <span>&rarr;</span></button>}
+              {published && <button className="primary-button full-button" onClick={() => setScreen('Verify')}>Verify the revision <span>&rarr;</span></button>}
+            </>
+          )}
+
+          {screen === 'Verify' && (
+            <>
+              <StepHeading number="4" label="VERIFY" title="Verify what reviewers will see." description="Check the exact revision before inviting review. A green build alone is not enough; the experience and disclosures must also be current." />
+              <div className="verification-card">
+                {['Catalogue and child manifests', 'Routes or screenshot mappings', 'Fidelity and limitations', 'Deployment revision'].map((label, index) => (
+                  <div key={label}><span className={verified ? 'verify-icon passed' : 'verify-icon'}>{verified ? 'OK' : `0${index + 1}`}</span><div><strong>{label}</strong><small>{verified ? 'Verified against the fixture revision' : 'Waiting for verification'}</small></div></div>
                 ))}
               </div>
-              <button className="primary-button full-button" onClick={() => setScreen('Capture')}>Prepare the repository <span>→</span></button>
+              {verified ? <StatusCard title="Revision verified" copy="The fixture revision is ready for a focused Mission Surface review." /> : <button className="primary-button full-button" onClick={() => setVerified(true)}>Run verification <span>&rarr;</span></button>}
+              {verified && <button className="primary-button full-button" onClick={() => setScreen('Review and comment')}>Open the review <span>&rarr;</span></button>}
             </>
           )}
 
-          {screen === 'Capture' && (
+          {screen === 'Review and comment' && (
             <>
-              <div className="step-kicker"><span>STEP 2 OF 3</span><span>Prepare</span></div>
-              <h1>Capture and validate locally.</h1>
-              <p className="lead">Mission Surface reads committed files through GitHub. It never runs your repository code.</p>
-
-              <div className="terminal-card">
-                <div className="terminal-top"><span><i /><i /><i /></span><small>PowerShell · repository root</small></div>
-                <code><span>PS</span> powershell.exe -NoProfile<br />&nbsp;&nbsp; -ExecutionPolicy Bypass<br />&nbsp;&nbsp; -File .\prepare-and-validate.ps1</code>
-                <button onClick={() => toggleComplete('Run local validation')}>{completed.includes('Run local validation') ? '✓ Validation marked complete' : 'Mark validation complete'}</button>
+              <StepHeading number="5" label="REVIEW" title="Review the journey and comment." description="Use Mission Surface navigation, Explain callouts, fullscreen, and contextual comments to evaluate the demonstrated experience." />
+              <div className="review-preview">
+                <div className="review-toolbar"><span>Mobile sample</span><div><b>Explain</b><b>Comment</b></div></div>
+                <div className="review-canvas"><span className="mini-phone">MS</span><span className="explain-anchor">1</span><div className="explain-box"><strong>Is the next decision clear?</strong><small>Callouts point to the experience without changing its layout.</small></div></div>
               </div>
-
-              <div className="validation-list">
-                <div><span className="validation-icon">1</span><div><strong>Capture</strong><small>Generate PNG, JPEG, or WebP artifacts locally.</small></div></div>
-                <div><span className="validation-icon">2</span><div><strong>Validate</strong><small>Confirm every page maps exactly once and in order.</small></div></div>
-                <div><span className="validation-icon">3</span><div><strong>Inspect</strong><small>Review the build and changed files before committing.</small></div></div>
-              </div>
-
-              <div className="callout"><span>i</span><p><strong>Mission Surface stays read-only.</strong> Capture, build, commit, and push all happen in your local workflow.</p></div>
-              <button className="primary-button full-button" onClick={() => setScreen('Review')}>Move to review <span>→</span></button>
+              {commented && <div className="comment-card"><span>PD</span><div><strong>Fixture reviewer</strong><p>The setup path is clear. Verify the image handoff wording with the team.</p></div></div>}
+              {commented ? <StatusCard title="Comment added" copy="This is a local fixture state; no feedback was sent." /> : <button className="primary-button full-button" onClick={() => setCommented(true)}>Add fixture comment <span>+</span></button>}
+              {commented && <button className="primary-button full-button" onClick={() => setScreen('Submit feedback')}>Finish in Requests <span>&rarr;</span></button>}
             </>
           )}
 
-          {screen === 'Review' && (
+          {screen === 'Submit feedback' && (
             <>
-              <div className="step-kicker"><span>STEP 3 OF 3</span><span>Review</span></div>
-              <h1>Publish a revision reviewers can trust.</h1>
-              <p className="lead">Commit the validated artifacts, push the revision, and let Mission Surface verify the catalogue.</p>
-
-              <div className="repository-card">
-                <div className="repo-mark">GH</div><div><span>PRIVATE REPOSITORY</span><strong>team / prototype-workspace</strong><small>main · fixture-only content</small></div><span className="status-pill">Connected</span>
+              <StepHeading number="6" label="CLOSE THE LOOP" title="Submit feedback to Requests." description="Return the review outcome to the Request dashboard so the product team can decide what happens next." />
+              <div className="request-card">
+                <div className="request-top"><span className="panel-icon violet">RQ</span><div><span>REQUEST DASHBOARD</span><strong>Prototype feedback</strong></div><span className="draft-pill">Draft</span></div>
+                <div className="request-field"><span>OUTCOME</span><strong>Proceed with changes</strong></div>
+                <div className="request-field"><span>SUMMARY</span><p>The setup journey is ready for the next product decision. One image-workflow wording change remains.</p></div>
+                <div className="request-meta"><span>6 steps reviewed</span><span>1 comment linked</span></div>
               </div>
-
-              <div className="review-checks">
-                <button onClick={() => toggleComplete('Commit artifacts')}><span className={completed.includes('Commit artifacts') ? 'check checked' : 'check'}>{completed.includes('Commit artifacts') ? '✓' : ''}</span><div><strong>Commit the reviewed artifacts</strong><small>Keep capture source outside the public bundle.</small></div></button>
-                <button onClick={() => toggleComplete('Verify revision')}><span className={completed.includes('Verify revision') ? 'check checked' : 'check'}>{completed.includes('Verify revision') ? '✓' : ''}</span><div><strong>Verify the deployed revision</strong><small>Pages metadata must match the selected commit.</small></div></button>
-              </div>
-
-              <div className="review-boundary"><span className="tip-icon">✦</span><div><strong>Approval means target UX</strong><p>It does not imply production readiness, security approval, or integration completeness.</p></div></div>
-
-              {showSuccess ? <div className="success-state"><span>✓</span><div><strong>Ready for a focused review</strong><small>Your simulated walkthrough is prepared for stakeholder feedback.</small></div></div> : <button className="primary-button full-button" onClick={() => setShowSuccess(true)}>Preview review state <span>→</span></button>}
-              <button className="secondary-button" onClick={() => setScreen('Today')}>Return to the playbook</button>
+              <div className="privacy-note"><span>i</span><p>This baseline uses fixture feedback only. Nothing is submitted outside the simulation.</p></div>
+              {submitted ? (
+                <div className="finish-state"><span>OK</span><div><strong>Feedback submitted</strong><small>The simulated request is now ready for product triage.</small></div></div>
+              ) : <button className="primary-button full-button" onClick={() => setSubmitted(true)}>Submit to Request dashboard <span>&rarr;</span></button>}
+              {submitted && <button className="secondary-button" onClick={() => setScreen('Start')}>Return to the baseline path</button>}
             </>
           )}
         </section>
 
-        <nav className="bottom-nav" aria-label="Prototype guide">
-          <button className={screen === 'Today' ? 'active' : ''} onClick={() => setScreen('Today')}><span className="nav-icon">⌂</span><small>Today</small></button>
-          <button className={screen === 'Task detail' || screen === 'Capture' ? 'active' : ''} onClick={() => setScreen('Task detail')}><span className="nav-icon">☷</span><small>Guide</small></button>
-          <button className={screen === 'Review' ? 'active' : ''} onClick={() => setScreen('Review')}><span className="nav-icon">✓</span><small>Review</small></button>
+        <nav className="bottom-nav" aria-label="Prototype setup guide">
+          <button className={screen === 'Start' ? 'active' : ''} onClick={() => setScreen('Start')}><span className="nav-icon">01</span><small>Start</small></button>
+          <button className={['Download starter', 'Connect GitHub', 'Publish or capture', 'Verify'].includes(screen) ? 'active' : ''} onClick={() => setScreen('Download starter')}><span className="nav-icon">04</span><small>Setup</small></button>
+          <button className={['Review and comment', 'Submit feedback'].includes(screen) ? 'active' : ''} onClick={() => setScreen('Review and comment')}><span className="nav-icon">06</span><small>Review</small></button>
         </nav>
       </article>
     </main>
   )
+}
+
+function StepHeading({ number, label, title, description }: { number: string; label: string; title: string; description: string }) {
+  return <><div className="step-kicker"><span>STEP {number} OF 6</span><span>{label}</span></div><h1>{title}</h1><p className="lead">{description}</p></>
+}
+
+function Detail({ icon, title, copy }: { icon: string; title: string; copy: string }) {
+  return <div><span className="detail-icon">{icon}</span><div><strong>{title}</strong><small>{copy}</small></div></div>
+}
+
+function StatusCard({ title, copy }: { title: string; copy: string }) {
+  return <div className="status-card" role="status"><span>OK</span><div><strong>{title}</strong><small>{copy}</small></div></div>
 }

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 type Screen =
   | 'Start'
@@ -31,6 +31,7 @@ const journey: Array<{ page: Exclude<Screen, 'Start'>; number: string; title: st
 ]
 
 export default function App() {
+  const screenRef = useRef<HTMLElement>(null)
   const [screen, setScreen] = useState<Screen>('Start')
   const [downloaded, setDownloaded] = useState(false)
   const [connected, setConnected] = useState(false)
@@ -61,6 +62,50 @@ export default function App() {
     window.parent.postMessage({ protocol: 'mission-surface-prototype', version: 1, channel: bridge.channel, prototypeKey: 'mobile-sample', type: 'page', page: screen }, bridge.parentOrigin)
   }, [bridge, screen])
 
+  useEffect(() => {
+    if (!bridge) return
+    const element = screenRef.current
+    if (!element) return
+
+    let animationFrame: number | null = null
+    const postViewport = () => {
+      animationFrame = null
+      window.parent.postMessage({
+        protocol: 'mission-surface-prototype',
+        version: 1,
+        channel: bridge.channel,
+        prototypeKey: 'mobile-sample',
+        type: 'viewport',
+        page: screen,
+        scrollX: element.scrollLeft,
+        scrollY: element.scrollTop,
+        viewportWidth: element.clientWidth,
+        viewportHeight: element.clientHeight,
+        documentWidth: element.scrollWidth,
+        documentHeight: element.scrollHeight,
+      }, bridge.parentOrigin)
+    }
+    const scheduleViewport = () => {
+      if (animationFrame === null) animationFrame = window.requestAnimationFrame(postViewport)
+    }
+
+    element.addEventListener('scroll', scheduleViewport, { passive: true })
+    window.addEventListener('resize', scheduleViewport)
+    const resizeObserver = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(scheduleViewport)
+    resizeObserver?.observe(element)
+    Array.from(element.children).forEach((child) => resizeObserver?.observe(child))
+    scheduleViewport()
+    const retryTimers = [250, 1000].map((delay) => window.setTimeout(scheduleViewport, delay))
+
+    return () => {
+      element.removeEventListener('scroll', scheduleViewport)
+      window.removeEventListener('resize', scheduleViewport)
+      resizeObserver?.disconnect()
+      retryTimers.forEach(window.clearTimeout)
+      if (animationFrame !== null) window.cancelAnimationFrame(animationFrame)
+    }
+  }, [bridge, screen, downloaded, connected, deliveryMode, published, verified, commented, submitted])
+
   const completion = [downloaded, connected, published, verified, commented, submitted]
   const progress = Math.round((completion.filter(Boolean).length / completion.length) * 100)
   const goBack = () => setScreen(pageOrder[Math.max(0, pageOrder.indexOf(screen) - 1)])
@@ -79,7 +124,7 @@ export default function App() {
 
         <div className="screen-progress" aria-label={`Setup ${progress}% complete`}><span style={{ width: `${progress}%` }} /></div>
 
-        <section className="screen" key={screen}>
+        <section className="screen" key={screen} ref={screenRef}>
           {screen !== 'Start' && <button className="text-button back-button" onClick={goBack}><span>&larr;</span> Back</button>}
 
           {screen === 'Start' && (
@@ -160,11 +205,11 @@ export default function App() {
               ) : (
                 <div className="terminal-card">
                   <div className="terminal-top"><span><i /><i /><i /></span><small>PowerShell &middot; repository root</small></div>
-                  <code><span>PS</span> .\prepare-and-validate.ps1</code>
+                  <code><span>PS</span> .\prepare-images.ps1</code>
                   <p>Captures declared pages, validates the images, and builds the live-only public bundle.</p>
                 </div>
               )}
-              {published ? <StatusCard title={deliveryMode === 'Live' ? 'Pages enabled' : 'Images prepared'} copy={deliveryMode === 'Live' ? 'The fixture deployment is available for verification.' : 'The fixture screenshots passed local preparation.'} /> : <button className="primary-button full-button" onClick={() => setPublished(true)}>{deliveryMode === 'Live' ? 'Enable GitHub Pages' : 'Run prepare and validate'} <span>&rarr;</span></button>}
+              {published ? <StatusCard title={deliveryMode === 'Live' ? 'Pages enabled' : 'Images prepared'} copy={deliveryMode === 'Live' ? 'The fixture deployment is available for verification.' : 'The fixture screenshots passed local preparation.'} /> : <button className="primary-button full-button" onClick={() => setPublished(true)}>{deliveryMode === 'Live' ? 'Enable GitHub Pages' : 'Run image preparation'} <span>&rarr;</span></button>}
               {published && <button className="primary-button full-button" onClick={() => setScreen('Verify')}>Verify the revision <span>&rarr;</span></button>}
             </>
           )}

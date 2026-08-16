@@ -1,5 +1,7 @@
 #requires -Version 5.1
 
+# Prepares image-delivery prototype artifacts by capturing, validating, and building them.
+
 [CmdletBinding()]
 param()
 
